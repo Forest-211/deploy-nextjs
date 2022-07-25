@@ -25,7 +25,7 @@ jobs:
         with:
           host: ${{ secrets.HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
-          password: ${{ secrets.SERVER_PASSWORD }}
+          key: ${{ secrets.KEY }}
           port: ${{ secrets.PORT }}
           script: |
             cd /home/nextjs

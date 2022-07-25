@@ -29,5 +29,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /home/nextjs
-            sh deploy-nextjs.sh
+            sh deploy-nextjs.sh ${{secrets.USERNAME}} ${{secrets.PASSWORD}}
     needs: build

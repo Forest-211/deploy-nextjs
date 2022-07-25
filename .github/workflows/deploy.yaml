@@ -28,6 +28,6 @@ jobs:
           password: ${{ secrets.SERVER_PASSWORD }}
           port: ${{ secrets.PORT }}
           script: |
-            cd /home/deploy
+            cd /home/nextjs
             sh website.sh
     needs: build

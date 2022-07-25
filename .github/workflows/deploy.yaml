@@ -1,0 +1,33 @@
+name: Docker Image CI & CD
+
+on:
+  # 在直接推送/pr到Master分支时触发
+  push:
+    branches: ["main"]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: build image
+        run: docker build --file Dockerfile --tag ccr.ccs.tencentyun.com/${{secrets.NAMESPACE}}/website:latest .
+      - name: login to tencent repository
+        run: docker login ccr.ccs.tencentyun.com --username=${{secrets.USERNAME}} --password=${{secrets.PASSWORD}}
+      - name: push the built image to the tencent repository
+        run: docker push ccr.ccs.tencentyun.com/${{secrets.NAMESPACE}}/website:latest
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: executing remote ssh commands using password
+        uses: appleboy/ssh-action@master
+        with:
+          host: ${{ secrets.HOST }}
+          username: ${{ secrets.SERVER_USERNAME }}
+          password: ${{ secrets.SERVER_PASSWORD }}
+          port: ${{ secrets.PORT }}
+          script: |
+            cd /home/deploy
+            sh website.sh
+    needs: build

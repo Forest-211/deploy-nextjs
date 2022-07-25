@@ -11,11 +11,11 @@ jobs:
     steps:
       - uses: actions/checkout@v3
       - name: build image
-        run: docker build --file Dockerfile --tag ccr.ccs.tencentyun.com/${{secrets.NAMESPACE}}/website:latest .
+        run: docker build --file Dockerfile --tag ccr.ccs.tencentyun.com/${{secrets.NAMESPACE}}/deploy-nextjs:latest .
       - name: login to tencent repository
         run: docker login ccr.ccs.tencentyun.com --username=${{secrets.USERNAME}} --password=${{secrets.PASSWORD}}
       - name: push the built image to the tencent repository
-        run: docker push ccr.ccs.tencentyun.com/${{secrets.NAMESPACE}}/website:latest
+        run: docker push ccr.ccs.tencentyun.com/${{secrets.NAMESPACE}}/deploy-nextjs:latest
 
   deploy:
     runs-on: ubuntu-latest
@@ -29,5 +29,5 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /home/nextjs
-            sh website.sh
+            sh deploy-nextjs.sh
     needs: build

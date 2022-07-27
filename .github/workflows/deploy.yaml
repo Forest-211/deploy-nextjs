@@ -29,7 +29,6 @@ jobs:
           port: ${{ secrets.PORT }}
           script: |
             cd /home/nextjs
-            sh deploy-nextjs.sh
             echo -e "---------docker Login--------"
             docker login --username=${{secrets.USERNAME}} ccr.ccs.tencentyun.com --password=${{secrets.PASSWORD}}
 

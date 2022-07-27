@@ -32,20 +32,20 @@ jobs:
             echo -e "---------docker Login--------"
             docker login --username=${{secrets.USERNAME}} ccr.ccs.tencentyun.com --password=${{secrets.PASSWORD}}
 
-            if [[ -n $(docker ps -q -f "name=^${containerName}$") ]]; then
+            if [[ -n $(docker ps -q -f "name=^deploy-nextjs$") ]]; then
               echo "container exist"
             else
               echo "container not exist"
             fi
 
-            if [[ -z $(docker ps -q -f "name=^${containerName}$") ]]; then
+            if [[ -z $(docker ps -q -f "name=^deploy-nextjs$") ]]; then
               echo "container not exist"
             else
               echo "container exist"
               echo "------------stop container------------"
-              docker stop ${containerName}
+              docker stop deploy-nextjs
               echo "------------rm container------------"
-              docker rm ${containerName}
+              docker rm deploy-nextjs
               docker ps -a
               echo "------------remove image------------"
               docker rmi "ccr.ccs.tencentyun.com/tcb-100009594589-fstu/deploy-nextjs"

@@ -1,6 +1,5 @@
 import { Textarea } from '@chakra-ui/react';
 import React, { useEffect, useState } from 'react';
-import JsonView from '../components/JsonView';
 import styles from '../styles/tools.module.css';
 
 const Tools = () => {
@@ -25,7 +24,6 @@ const Tools = () => {
                     value={value}
                     onChange={text => setValue(text.target.value)}
                 />
-                <JsonView data={value} />
             </div>
         </div>
     );

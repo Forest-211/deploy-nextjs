@@ -30,4 +30,36 @@ jobs:
           script: |
             cd /home/nextjs
             sh deploy-nextjs.sh
+            echo -e "---------docker Login--------"
+            docker login --username=${{secrets.USERNAME}} ccr.ccs.tencentyun.com --password=${{secrets.PASSWORD}}
+
+            if [[ -n $(docker ps -q -f "name=^${containerName}$") ]]; then
+              echo "container exist"
+            else
+              echo "container not exist"
+            fi
+
+            if [[ -z $(docker ps -q -f "name=^${containerName}$") ]]; then
+              echo "container not exist"
+            else
+              echo "container exist"
+              echo "------------stop container------------"
+              docker stop ${containerName}
+              echo "------------rm container------------"
+              docker rm ${containerName}
+              docker ps -a
+              echo "------------remove image------------"
+              docker rmi "ccr.ccs.tencentyun.com/tcb-100009594589-fstu/deploy-nextjs"
+              docker images
+              
+            fi
+            echo "------------reload container------------"
+            docker-compose up -d
+            # echo -e "---------docker Pull--------"
+            # docker pull ccr.ccs.tencentyun.com/tcb-100009594589-fstu/deploy-nextjs:latest
+            # echo -e "---------docker Create and Start--------"
+            # docker run --rm -d -p 13000:3000 --name deploy-nextjs ccr.ccs.tencentyun.com/tcb-100009594589-fstu/deploy-nextjs:latest
+            # echo -e "---------deploy Success--------"
+            docker logout
+            echo -e "---------docker logout---------"
     needs: build

@@ -1,0 +1,9 @@
+version: "3.8"
+
+services:
+  next-app:
+    image: ccr.ccs.tencentyun.com/tcb-100009594589-fstu/deploy-nextjs
+    container_name: "deploy-nextjs"
+    restart: always
+    ports:
+      - 13000:3000

@@ -15,16 +15,15 @@ const Tools = () => {
         fetchJson();
     }, []);
     return (
-        <div>
-            <div className={styles['container']}>
-                <Textarea
-                    className={styles['textarea']}
-                    resize={'vertical'}
-                    size={'md'}
-                    value={value}
-                    onChange={text => setValue(text.target.value)}
-                />
-            </div>
+        <div className={styles['container']}>
+            <h2>tools</h2>
+            <Textarea
+                className={styles['textarea']}
+                resize={'vertical'}
+                size={'md'}
+                value={value}
+                onChange={text => setValue(text.target.value)}
+            />
         </div>
     );
 };
